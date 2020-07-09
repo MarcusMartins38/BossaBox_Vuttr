@@ -148,11 +148,12 @@ export const Information = styled.div`
   margin: 12px auto 0 auto;
 
   #description {
-    margin-top: 16px;
+    margin-top: 12px;
   }
 
-  div {
-    margin-top: 8px;
+  #div_tags {
+    margin-top: 12px;
+    margin-bottom: 16px;
 
     strong {
       margin-right: 8px;

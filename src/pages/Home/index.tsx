@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { TiDeleteOutline, TiPlus } from "react-icons/ti";
-import { FaHashtag } from "react-icons/fa";
 
 import api from "../../services/api";
+import ModalComponent from "../../components/Modal";
 
 import {
   Container,
@@ -25,6 +25,7 @@ interface PropsApi {
 }
 
 const Home: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   const [tools, setTools] = useState<PropsApi[]>([]);
 
   useEffect(() => {
@@ -33,6 +34,10 @@ const Home: React.FC = () => {
       console.log(response.data);
     });
   }, []);
+
+  const handleButtonAdd = useCallback(() => {
+    setModalOpen(!modalOpen);
+  }, [modalOpen]);
 
   return (
     <Container>
@@ -49,9 +54,10 @@ const Home: React.FC = () => {
             <input type="checkbox" />
             <label>Search in tags only</label>
           </div>
-          <button>
+          <button onClick={handleButtonAdd}>
             <TiPlus /> Add
           </button>
+          <ModalComponent isOpen={modalOpen} setIsOpen={handleButtonAdd} />
         </HeaderOfList>
 
         {tools.map((tool) => (
@@ -69,7 +75,7 @@ const Home: React.FC = () => {
 
               <p id="description">{tool.description}</p>
 
-              <div>
+              <div id="div_tags">
                 {tool.tags.map((tag) => (
                   <strong key={tag}>#{tag}</strong>
                 ))}
