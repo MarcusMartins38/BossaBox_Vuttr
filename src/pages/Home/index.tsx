@@ -28,13 +28,25 @@ const Home: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tools, setTools] = useState<PropsApi[]>([]);
 
-  const [searchTool, setSearchTool] = useState<string | undefined>();
+  const [searchTool, setSearchTool] = useState<string>("");
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    // api.get("/tools").then((response) => {
-    //   setTools(response.data);
-    // });
+    // MELHOR METODO, NO QUAL SÓ REALIZA QUERRY, SE O INPUT ESTIVER VAZIO
+    // DIMINUINDO DRASTICAMENTE A QUANTIDADE DE QUERRY'S NECESSARIAS PARA
+    // FAZER UMA BUSCA
+
+    // if (searchTool === "") {
+    //   api.get("/tools").then((response) => {
+    //     setTools(response.data);
+    //   });
+    // } else {
+    //   const lowerSearchTool = searchTool.toLowerCase();
+    //   let b = tools.filter(
+    //     (item) => item.title.toLowerCase().indexOf(lowerSearchTool) > -1
+    //   );
+    //   setTools(b);
+    // }
 
     async function loadTools(): Promise<void> {
       if (checked === false) {
@@ -56,6 +68,7 @@ const Home: React.FC = () => {
     }
 
     loadTools();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked, searchTool]);
 
   const handleButtonAdd = useCallback(() => {
