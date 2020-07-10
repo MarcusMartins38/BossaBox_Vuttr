@@ -28,8 +28,6 @@ const Home: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tools, setTools] = useState<PropsApi[]>([]);
 
-  const updatingTheApi = useCallback(() => {}, []);
-
   useEffect(() => {
     api.get("/tools").then((response) => {
       setTools(response.data);
@@ -41,7 +39,6 @@ const Home: React.FC = () => {
   }, [modalOpen]);
 
   const handleRemoveTool = useCallback((id) => {
-    // window.location.reload();
     api.delete(`/tools/${id}`);
     api.get("/tools").then((response) => {
       setTools(response.data);
