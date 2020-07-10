@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactModal from "react-modal";
 
 import { Container, Content } from "./styles";

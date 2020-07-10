@@ -81,18 +81,7 @@ const Home: React.FC = () => {
     setModalAddOpen(!modalAddOpen);
   }, [modalAddOpen]);
 
-  const handleRemoveTool = useCallback(
-    (id) => {
-      // api.delete(`/tools/${id}`);
-      // api.get("/tools").then((response) => {
-      //   setTools(response.data);
-      // });
-      setModalRemoveOpen(!modalAddOpen);
-    },
-    [modalAddOpen]
-  );
-
-  const tryhandleRemoveTool = useCallback(
+  const handleButtonRemoveTool = useCallback(
     (tool) => {
       setselectRemoveTool(tool);
       setModalRemoveOpen(!modalAddOpen);
@@ -100,7 +89,7 @@ const Home: React.FC = () => {
     [modalAddOpen]
   );
 
-  const try2handleRemoveTool = useCallback(() => {
+  const handleModalRemoveTool = useCallback(() => {
     setModalRemoveOpen(!modalRemoveOpen);
   }, [modalRemoveOpen]);
 
@@ -135,7 +124,7 @@ const Home: React.FC = () => {
               <HeaderOfContent>
                 <a href={tool.link}>{tool.title}</a>
                 <div>
-                  <button onClick={() => tryhandleRemoveTool(tool)}>
+                  <button onClick={() => handleButtonRemoveTool(tool)}>
                     <TiDeleteOutline size={32} />
                   </button>
                   <p>remove</p>
@@ -155,7 +144,7 @@ const Home: React.FC = () => {
       </Content>
       <ModalRemoveTool
         isRemoveOpen={modalRemoveOpen}
-        setRemoveIsOpen={try2handleRemoveTool}
+        setRemoveIsOpen={handleModalRemoveTool}
         tool={selectRemoveTool}
       />
     </Container>
