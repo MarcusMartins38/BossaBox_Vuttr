@@ -52,8 +52,8 @@ const ModalRemoveTool: React.FC<ModalProps> = ({
           transform: "translate(-50%, -50%)",
           background: "transparent",
           color: "#000000",
-          width: "636px",
-          height: "30vh",
+          width: "600px",
+          height: "25vh",
           border: "0",
         },
         overlay: {

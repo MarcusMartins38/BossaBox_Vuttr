@@ -39,8 +39,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // MELHOR METODO, NO QUAL SÓ REALIZA QUERRY, SE O INPUT ESTIVER VAZIO
-    // DIMINUINDO DRASTICAMENTE A QUANTIDADE DE QUERRY'S NECESSARIAS PARA
-    // FAZER UMA BUSCA
+    // DIMINUINDO DRASTICAMENTE A QUANTIDADE DE ACESSO AO BANCO DE DADOS
 
     // if (searchTool === "") {
     //   api.get("/tools").then((response) => {
