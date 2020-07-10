@@ -28,11 +28,35 @@ const Home: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tools, setTools] = useState<PropsApi[]>([]);
 
+  const [searchTool, setSearchTool] = useState<string | undefined>();
+  const [checked, setChecked] = useState(false);
+
   useEffect(() => {
-    api.get("/tools").then((response) => {
-      setTools(response.data);
-    });
-  }, []);
+    // api.get("/tools").then((response) => {
+    //   setTools(response.data);
+    // });
+
+    async function loadTools(): Promise<void> {
+      if (checked === false) {
+        const response = await api.get("/tools", {
+          params: {
+            q: searchTool,
+          },
+        });
+
+        setTools(response.data);
+      } else {
+        const res = await api.get("/tools", {
+          params: {
+            tags_like: searchTool,
+          },
+        });
+        setTools(res.data);
+      }
+    }
+
+    loadTools();
+  }, [checked, searchTool]);
 
   const handleButtonAdd = useCallback(() => {
     setModalOpen(!modalOpen);
@@ -55,9 +79,13 @@ const Home: React.FC = () => {
           <div>
             <InputSearchDiv>
               <img src={IconLupa} alt="Lupa" />
-              <input type="text" placeholder="Search" />
+              <input
+                type="text"
+                placeholder="Search"
+                onChange={(event) => setSearchTool(event.target.value)}
+              />
             </InputSearchDiv>
-            <input type="checkbox" />
+            <input type="checkbox" onChange={() => setChecked(!checked)} />
             <label>Search in tags only</label>
           </div>
           <button onClick={handleButtonAdd}>
