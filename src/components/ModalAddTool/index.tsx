@@ -19,7 +19,7 @@ interface PropsApi {
   tags: string[];
 }
 
-const ModalComponent: React.FC<ModalProps> = ({ isOpen, setIsOpen }) => {
+const ModalAddTool: React.FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const [modalStatus, setModalStatus] = useState(isOpen);
 
   const [formData, setFormData] = useState({
@@ -127,4 +127,4 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   );
 };
 
-export default ModalComponent;
+export default ModalAddTool;

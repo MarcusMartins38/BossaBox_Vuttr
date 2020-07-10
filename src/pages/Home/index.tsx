@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { TiDeleteOutline, TiPlus } from "react-icons/ti";
 
 import api from "../../services/api";
-import ModalComponent from "../../components/Modal";
+import ModalAddTool from "../../components/ModalAddTool";
+import ModalRemoveTool from "../../components/ModalRemoveTool";
 
 import {
   Container,
@@ -25,7 +26,12 @@ interface PropsApi {
 }
 
 const Home: React.FC = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalAddOpen, setModalAddOpen] = useState(false);
+  const [modalRemoveOpen, setModalRemoveOpen] = useState(false);
+  const [selectRemoveTool, setselectRemoveTool] = useState<PropsApi>(
+    {} as PropsApi
+  );
+
   const [tools, setTools] = useState<PropsApi[]>([]);
 
   const [searchTool, setSearchTool] = useState<string>("");
@@ -72,15 +78,31 @@ const Home: React.FC = () => {
   }, [checked, searchTool]);
 
   const handleButtonAdd = useCallback(() => {
-    setModalOpen(!modalOpen);
-  }, [modalOpen]);
+    setModalAddOpen(!modalAddOpen);
+  }, [modalAddOpen]);
 
-  const handleRemoveTool = useCallback((id) => {
-    api.delete(`/tools/${id}`);
-    api.get("/tools").then((response) => {
-      setTools(response.data);
-    });
-  }, []);
+  const handleRemoveTool = useCallback(
+    (id) => {
+      // api.delete(`/tools/${id}`);
+      // api.get("/tools").then((response) => {
+      //   setTools(response.data);
+      // });
+      setModalRemoveOpen(!modalAddOpen);
+    },
+    [modalAddOpen]
+  );
+
+  const tryhandleRemoveTool = useCallback(
+    (tool) => {
+      setselectRemoveTool(tool);
+      setModalRemoveOpen(!modalAddOpen);
+    },
+    [modalAddOpen]
+  );
+
+  const try2handleRemoveTool = useCallback(() => {
+    setModalRemoveOpen(!modalRemoveOpen);
+  }, [modalRemoveOpen]);
 
   return (
     <Container>
@@ -104,7 +126,7 @@ const Home: React.FC = () => {
           <button onClick={handleButtonAdd}>
             <TiPlus /> Add
           </button>
-          <ModalComponent isOpen={modalOpen} setIsOpen={handleButtonAdd} />
+          <ModalAddTool isOpen={modalAddOpen} setIsOpen={handleButtonAdd} />
         </HeaderOfList>
 
         {tools.map((tool) => (
@@ -113,7 +135,7 @@ const Home: React.FC = () => {
               <HeaderOfContent>
                 <a href={tool.link}>{tool.title}</a>
                 <div>
-                  <button onClick={() => handleRemoveTool(tool.id)}>
+                  <button onClick={() => tryhandleRemoveTool(tool)}>
                     <TiDeleteOutline size={32} />
                   </button>
                   <p>remove</p>
@@ -131,6 +153,11 @@ const Home: React.FC = () => {
           </BoxOfApi>
         ))}
       </Content>
+      <ModalRemoveTool
+        isRemoveOpen={modalRemoveOpen}
+        setRemoveIsOpen={try2handleRemoveTool}
+        tool={selectRemoveTool}
+      />
     </Container>
   );
 };
