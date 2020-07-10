@@ -8,6 +8,8 @@ export const Container = styled.div`
   flex-direction: column;
 
   background-color: white;
+  border-radius: 10px;
+  border: 2px solid black;
 
   overflow-y: scroll;
 

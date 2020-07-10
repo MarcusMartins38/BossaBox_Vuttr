@@ -28,16 +28,25 @@ const Home: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tools, setTools] = useState<PropsApi[]>([]);
 
+  const updatingTheApi = useCallback(() => {}, []);
+
   useEffect(() => {
     api.get("/tools").then((response) => {
       setTools(response.data);
-      console.log(response.data);
     });
   }, []);
 
   const handleButtonAdd = useCallback(() => {
     setModalOpen(!modalOpen);
   }, [modalOpen]);
+
+  const handleRemoveTool = useCallback((id) => {
+    // window.location.reload();
+    api.delete(`/tools/${id}`);
+    api.get("/tools").then((response) => {
+      setTools(response.data);
+    });
+  }, []);
 
   return (
     <Container>
@@ -66,7 +75,7 @@ const Home: React.FC = () => {
               <HeaderOfContent>
                 <a href={tool.link}>{tool.title}</a>
                 <div>
-                  <button>
+                  <button onClick={() => handleRemoveTool(tool.id)}>
                     <TiDeleteOutline size={32} />
                   </button>
                   <p>remove</p>
